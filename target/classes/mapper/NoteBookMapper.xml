@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.cloud_note.dao.NoteBookDao">
+	
+	<!-- 根据用户id查找用户的所有笔记本 -->
+	<select id="findByUserId" parameterType="String" resultType="Map">
+		select * from cn_notebook 
+		where cn_user_id=#{cn_user_id}
+		order by cn_notebook_createtime desc
+	</select>
+	
+	<!-- 添加笔记本 -->
+	<insert id="add" parameterType="Notebook">
+		insert into cn_notebook (cn_notebook_id,cn_user_id,cn_notebook_type_id,cn_notebook_name,cn_notebook_desc,cn_notebook_createtime)
+		values(#{cn_notebook_id},#{cn_user_id},#{cn_notebook_type_id},#{cn_notebook_name},#{cn_notebook_desc},#{cn_notebook_createtime})
+	</insert>
+	
+	<!-- 修改笔记本名字 -->
+	<update id="update" parameterType="Notebook">
+		update cn_notebook set cn_notebook_name=#{cn_notebook_name}
+		where cn_notebook_id=#{cn_notebook_id}
+	</update>
+	
+	<!-- 根据笔记本id删除笔记本 -->
+	<delete id="delete" parameterType="String">
+		delete from cn_notebook 
+		where cn_notebook_id=#{bookId}
+	</delete>
+</mapper>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>笔记搜索</title>
+<script type="text/javascript"
+	src="scripts/jquery.min.js">
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#search_btn").click(function(){
+		//获取请求参数
+		var title = $("#title").val().trim();
+		var status = $("#status").val();
+		var begin = $("#begin").val().trim();
+		var end = $("#end").val().trim();
+		//发送Ajax请求
+		$.ajax({
+			url:"note/hight_search.do",
+			type:"post",
+			data:{"title":title,"status":status,
+				"begin":begin,"end":end},
+			dataType:"json",
+			success:function(result){
+				if(result.status==0){
+					var notes = result.data;
+					//请求原有结果列表
+					$("table").empty();
+					//循环笔记生成列表
+					for(var i=0;i<notes.length;i++){
+						var id = notes[i].cn_note_id;
+						var title = notes[i].cn_note_title;
+						//创建一个tr
+						var str = "<tr><td>"+id+"</td><td>"
+							+title+"</td></tr>";
+						//添加到table中
+						$("table").append(str);
+					}
+				}
+			},
+			error:function(){
+				alert("搜索异常");
+			}
+		});
+	});
+});
+</script>
+</head>
+<body>
+标题:<input type="text" id="title">
+状态:<select id="status">
+       <option value="0">全部</option>
+       <option value="1">正常</option>
+       <option value="2">删除</option>
+     </select>
+<button id="search_btn">开始搜索</button>
+<br/>
+开始日期:<input type="text" id="begin">
+结束日期:<input type="text" id="end">
+<hr/>
+<table></table>
+</body>
+</html>

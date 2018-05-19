@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.cloud_note.dao.CollectionNoteDao">
+	<!-- 收藏笔记(添加笔记) -->
+	<insert id="addNote" parameterType="CollectionNote">
+		insert into cn_collection (cn_collection_id,cn_collection_user_id,cn_collection_share_id)
+		values(#{cn_collection_id},#{cn_collection_user_id},#{cn_collection_share_id})
+	</insert>
+	
+	<!-- 根据分享笔记id查找收藏表中的记录 -->
+	<select id="findByShareId" parameterType="String" resultType="CollectionNote">
+		select * from cn_collection
+		where cn_collection_share_id=#{cn_collection_share_id}
+	</select>
+	
+	<!-- 根据用户id查找用户的收藏笔记 -->
+	<select id="findByUserId" parameterType="String" resultType="Map">
+		select cn_collection_id,cn_share_title from
+		cn_collection inner join cn_share on cn_share.cn_share_id=cn_collection.cn_collection_share_id
+		where cn_collection.cn_collection_user_id=#{userId}
+	</select>
+	
+	<!-- 根据分享笔记id查询分享笔记的内容 -->
+	<select id="findByCollectionId" parameterType="String" resultType="ShareNote" >
+		select cn_share_id,cn_share_title,cn_share_body,cn_note_id from
+		cn_collection inner join cn_share on cn_share.cn_share_id=cn_collection.cn_collection_share_id
+		where cn_collection.cn_collection_id=#{collectionId}
+	</select>
+	
+	<!-- 根据collectionid删除收藏的笔记 -->
+	<delete id="deleteByCollectionId" parameterType="String">
+		delete from cn_collection
+		where cn_collection.cn_collection_id=#{collectionId}
+	</delete>
+</mapper>

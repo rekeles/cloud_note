@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="cn.tedu.cloud_note.entity.User" alias="User"/>
+		
+		<typeAlias type="cn.tedu.cloud_note.entity.NoteBook" alias="Notebook"/>
+		
+		<typeAlias type="cn.tedu.cloud_note.entity.Note" alias="Note"/>
+		
+		<typeAlias type="cn.tedu.cloud_note.entity.ShareNote" alias="ShareNote"/>
+		
+		<typeAlias type="cn.tedu.cloud_note.entity.CollectionNote" alias="CollectionNote"/>
+		
+	</typeAliases>
+</configuration>
